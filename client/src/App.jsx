@@ -17,7 +17,7 @@ const App = () => {
   const dispatch = useDispatch();
   // const user = useSelector((data) => data.user);
   // console.log(user);
-  // const alert = useSelector((data) => data.alert);
+  const alert = useSelector((data) => data.alert);
   // console.log(alert);
 
   useEffect(() => {
