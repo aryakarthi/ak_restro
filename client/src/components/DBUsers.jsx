@@ -7,7 +7,8 @@ import { avatar } from "../assets";
 
 const DBUsers = () => {
   const allUsers = useSelector((data) => data.allUsers);
-  const editable = allUsers?.map((user) => ({ ...user }));
+  const clonedUsers = allUsers?.map((user) => ({ ...user }));
+  // console.log(clonedUsers);
 
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const DBUsers = () => {
             render: (rowData) => (
               <img
                 src={rowData.photoURL ? rowData.photoURL : avatar}
-                className="w-32 h-16 object-contain rounded-full"
+                className="w-32 h-16 object-contain rounded-md"
               />
             ),
           },
@@ -55,7 +56,7 @@ const DBUsers = () => {
             ),
           },
         ]}
-        data={editable}
+        data={clonedUsers}
         title="List of Users"
       />
     </div>

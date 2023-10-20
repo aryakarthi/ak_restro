@@ -25,12 +25,12 @@ const DBHeader = () => {
     });
   };
   return (
-    <div className="w-full flex items-center justify-between gap-3">
+    <div className="w-full flex items-center justify-between gap-3 mb-10">
       <p className="text-2xl text-headingColor">
         {user?.name && (
           <span className="block text-base text-gray-500">{`Hello ${user?.name}👋`}</span>
         )}
-        Welcome to ak ecom!
+        Welcome to ak Restro!
       </p>
 
       <div className="flex items-center justify-center gap-4">

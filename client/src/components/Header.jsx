@@ -9,10 +9,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { app } from "../config/firebase.config";
 import { setUserNull } from "../app/slices/userSlice";
+import { setCartOn } from "../app/slices/showCartSlice";
 
 const Header = () => {
   const user = useSelector((data) => data.user);
-  console.log(user);
+  const cartItems = useSelector((data) => data.cartItems);
+  console.log(cartItems.length);
   const [isMenu, setIsMenu] = useState(false);
   const dispatch = useDispatch();
   const firebaseAuth = getAuth(app);
@@ -27,14 +29,14 @@ const Header = () => {
     });
   };
   return (
-    <header className="fixed backdrop-blur-md z-50 inset-x-0 top-0 flex items-center justify-between px-12 md:px-20 py-6">
+    <header className="fixed backdrop-blur-md z-50 inset-x-0 top-0 flex items-center px-4 justify-between md:px-36 py-6">
       <NavLink to={"/"} className="flex items-center justify-center gap-4">
         <img src={logo} alt="Logo" className="w-12" />
-        <h3 className="font-semibold text-xl">ak ecom</h3>
+        <h3 className="font-semibold text-xl">ak Restro</h3>
       </NavLink>
 
       <nav className="flex items-center justify-center gap-8">
-        <ul className="hidden md:flex items-center justify-center gap-16">
+        <ul className="hidden md:flex items-center justify-center gap-8">
           <NavLink
             className={({ isActive }) =>
               isActive ? isActiveStyles : isNotActiveStyles
@@ -43,7 +45,7 @@ const Header = () => {
           >
             Home
           </NavLink>
-          <NavLink
+          {/* <NavLink
             className={({ isActive }) =>
               isActive ? isActiveStyles : isNotActiveStyles
             }
@@ -58,7 +60,7 @@ const Header = () => {
             to={"/about"}
           >
             About
-          </NavLink>
+          </NavLink> */}
           <NavLink
             className={({ isActive }) =>
               isActive ? isActiveStyles : isNotActiveStyles
@@ -69,11 +71,19 @@ const Header = () => {
           </NavLink>
         </ul>
 
-        <motion.div {...btnClick} className="relative cursor-pointer">
+        <motion.div
+          {...btnClick}
+          onClick={() => dispatch(setCartOn())}
+          className="relative cursor-pointer"
+        >
           <MdShoppingCart className="text-3xl text-textColor" />
-          <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center absolute -top-4 -right-1">
-            <p className="text-primary text-base font-semibold">3</p>
-          </div>
+          {cartItems?.length > 0 && (
+            <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center absolute -top-4 -right-1">
+              <p className="text-primary text-base font-semibold">
+                {cartItems?.length}
+              </p>
+            </div>
+          )}
         </motion.div>
 
         {user ? (

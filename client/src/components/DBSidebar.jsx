@@ -8,7 +8,7 @@ const DBSidebar = () => {
     <div className="h-full py-12 flex flex-col bg-lightOverlay backdrop-blur-md shadow-md min-w-210 w-300 gap-3">
       <NavLink to={"/"} className="flex items-center justify-start px-6 gap-4">
         <img src={logo} alt="Logo" className="w-12" />
-        <h3 className="font-semibold text-xl">ak ecom</h3>
+        <h3 className="font-semibold text-xl">ak Restro</h3>
       </NavLink>
       <hr />
 

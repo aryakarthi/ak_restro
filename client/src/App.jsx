@@ -4,19 +4,18 @@ import { Dashboard, Login, Main } from "./containers";
 import { getAuth } from "firebase/auth";
 import { app } from "./config/firebase.config";
 import { useSelector, useDispatch } from "react-redux";
-import { validateUserJWTToken } from "./api";
+import { getAllCartItems, validateUserJWTToken } from "./api";
 import { setUserDetails } from "./app/slices/userSlice";
 import { motion } from "framer-motion";
 import { fadeInOut } from "./animations";
 import { Alert, MainLoader } from "./components";
+import { setCartItems } from "./app/slices/cartSlice";
 
 const App = () => {
   const firebaseAuth = getAuth(app);
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
-  // const user = useSelector((data) => data.user);
-  // console.log(user);
   const alert = useSelector((data) => data.alert);
   // console.log(alert);
 
@@ -27,6 +26,12 @@ const App = () => {
         cred.getIdToken().then((token) => {
           validateUserJWTToken(token).then((data) => {
             // console.log(data);
+            if (data) {
+              getAllCartItems(data.user_id).then((items) => {
+                console.log(items);
+                dispatch(setCartItems(items));
+              });
+            }
             dispatch(setUserDetails(data));
           });
         });
@@ -38,7 +43,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="w-screen min-h-screen h-auto flex flex-col items-center justify-center">
+    <div className="w-screen min-h-screen flex flex-col items-center justify-center ">
       {isLoading && (
         <motion.div
           {...fadeInOut}

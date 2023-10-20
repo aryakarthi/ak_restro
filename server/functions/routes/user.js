@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const admin = require("firebase-admin");
-let data = [];
+// let data = [];
 
 router.get("/", (req, res) => {
   return res.send("User router");
@@ -28,35 +28,67 @@ router.get("/jwtVerification", async (req, res) => {
   }
 });
 
+// const listAllUsers = async (nextPageToken) => {
+//   admin
+//     .auth()
+//     .listUsers(1000, nextPageToken)
+//     .then((listUserResult) => {
+//       listUserResult.users.forEach((userRecord) => {
+//         data.push(userRecord.toJSON());
+//       });
+//       if (listUserResult.pageToken) {
+//         listAllUsers(listUserResult.pageToken);
+//       }
+//     })
+//     .catch((err) => console.log(err));
+// };
+
+// listAllUsers();
+
+// router.get("/all", async (req, res) => {
+//   listAllUsers();
+//   try {
+//     return res
+//       .status(200)
+//       .send({ success: true, data: data, dataCount: data.length });
+//   } catch (err) {
+//     return res.send({
+//       success: false,
+//       msg: `Error in listing users : ${err}`,
+//     });
+//   }
+// });
+
+// revised
 const listAllUsers = async (nextPageToken) => {
-  admin
-    .auth()
-    .listUsers(1000, nextPageToken)
-    .then((listUserResult) => {
-      listUserResult.users.forEach((userRecord) => {
-        data.push(userRecord.toJSON());
-      });
-      if (listUserResult.pageToken) {
-        listAllUsers(listUserResult.pageToken);
-      }
-    })
-    .catch((err) => console.log(err));
+  const data = []; // Declare the data array within the function scope
+
+  try {
+    const listUserResult = await admin.auth().listUsers(1000, nextPageToken);
+
+    listUserResult.users.forEach((userRecord) => {
+      data.push(userRecord.toJSON());
+    });
+
+    if (listUserResult.pageToken) {
+      await listAllUsers(listUserResult.pageToken); // Await the recursive call
+    }
+  } catch (err) {
+    console.error('Error listing users:', err);
+  }
+
+  return data; // Return the populated data array
 };
 
-listAllUsers();
-
-router.get("/all", async (req, res) => {
-  listAllUsers();
+// Usage example:
+router.get('/all', async (req, res) => {
   try {
-    return res
-      .status(200)
-      .send({ success: true, data: data, dataCount: data.length });
+    const allUsersData = await listAllUsers();
+    return res.status(200).send({ success: true, data: allUsersData, dataCount: allUsersData.length });
   } catch (err) {
-    return res.send({
-      success: false,
-      msg: `Error in listing users : ${err}`,
-    });
+    return res.status(500).send({ success: false, msg: `Error in listing users: ${err.message}` });
   }
 });
+
 
 module.exports = router;
