@@ -14,7 +14,6 @@ import { setCartOn } from "../app/slices/showCartSlice";
 const Header = () => {
   const user = useSelector((data) => data.user);
   const cartItems = useSelector((data) => data.cartItems);
-  console.log(cartItems.length);
   const [isMenu, setIsMenu] = useState(false);
   const dispatch = useDispatch();
   const firebaseAuth = getAuth(app);
@@ -28,6 +27,12 @@ const Header = () => {
       });
     });
   };
+
+  const handleLogin = () => {
+    console.log("clicked");
+    navigate("/login", { replace: true });
+  };
+
   return (
     <header className="fixed backdrop-blur-md z-50 inset-x-0 top-0 flex items-center px-4 justify-between md:px-36 py-6">
       <NavLink to={"/"} className="flex items-center justify-center gap-4">
@@ -105,7 +110,7 @@ const Header = () => {
                 <motion.div
                   {...slideTop}
                   onMouseLeave={() => setIsMenu(false)}
-                  className="px-6 py-4 w-48 bg-lightOverlay backdrop-blur-md rounded-md shadow-md absolute top-14 right-0 flex flex-col gap-4"
+                  className="px-6 py-4 w-48 bg-zinc-200 backdrop-blur-md rounded-md shadow-md absolute top-14 right-0 flex flex-col gap-4"
                 >
                   <Link
                     to={"/dashboard/home"}
@@ -142,9 +147,10 @@ const Header = () => {
           </>
         ) : (
           <>
-            <NavLink>
+            <NavLink to={"/login"}>
               <motion.button
                 {...btnClick}
+                // onClick={handleLogin}
                 className="px-4 py-2 rounded-md shadow-md bg-lightOverlay border border-emerald-300 cursor-pointer"
               >
                 Login

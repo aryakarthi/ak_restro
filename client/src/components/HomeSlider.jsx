@@ -6,7 +6,7 @@ import { slideTop } from "../animations";
 const HomeSlider = () => {
   return (
     <>
-      <motion.div {...slideTop} className="w-full bg-slate-300 my-10 p-2">
+      <motion.div {...slideTop} className="w-full my-10 p-2">
         <div className=" flex flex-col gap-1 mb-5">
           <p className="text-2xl text-headingColor font-bold">
             Our Fresh Fruits

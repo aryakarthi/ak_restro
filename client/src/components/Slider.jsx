@@ -11,15 +11,14 @@ import { SliderCard } from "../components";
 
 const Slider = () => {
   const products = useSelector((data) => data.products);
-  const clonedProducts = products?.map((prod) => ({ ...prod }));
+  console.log(products);
+  // const clonedProducts = products?.map((prod) => ({ ...prod }));
 
   const [fruits, setFruits] = useState(null);
 
   useEffect(() => {
-    setFruits(
-      clonedProducts?.filter((data) => data.product_category === "fruits")
-    );
-  }, [clonedProducts]);
+    setFruits(products?.filter((data) => data.product_category === "fruits"));
+  }, [products]);
 
   return (
     <div className="w-ful mx-auto">

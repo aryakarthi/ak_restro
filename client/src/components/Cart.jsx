@@ -11,10 +11,11 @@ import {
 import { getAllCartItems, increaseItemQuantity } from "../api";
 import { alertNULL, alertSuccess } from "../app/slices/alertSlice";
 import { setCartItems } from "../app/slices/cartSlice";
+import { emptyCart } from "../assets";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cartItems);
-  const user = useSelector((state) => state.user);
+  console.log(cartItems);
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
 
@@ -33,7 +34,7 @@ const Cart = () => {
       {...slideIn}
       className="fixed z-50 top-0 right-0 w-300 md:w-460 bg-lightOverlay backdrop-blur-md shadow-md h-full"
     >
-      <div className="w-full flex items-center justify-between py-4 pb-12 px-6">
+      {/* <div className="w-full flex items-center justify-between p-2 ">
         <motion.i
           {...btnClick}
           className="cursor-pointer"
@@ -41,16 +42,29 @@ const Cart = () => {
         >
           <BiChevronsRight className="text-[50px] text-textColor" />
         </motion.i>
-        <p className="text-xl text-headingColor font-semibold">Your Cart</p>
+        <p className="text-xl text-headingColor font-semibold">My Cart</p>
         <motion.i {...btnClick} className="cursor-pointer">
           <FcClearFilters className="text-[30px] text-textColor" />
         </motion.i>
-      </div>
+      </div> */}
 
-      <div className="flex-1 flex flex-col items-start justify-start rounded-t-3xl bg-zinc-700 h-full py-6  gap-3 relative">
+      <div className="flex-1 flex flex-col items-start justify-start bg-zinc-700 h-full p-4 gap-3 relative">
+        <div className="w-full flex items-center justify-between p-2 bg-lightOverlay ">
+          <motion.i
+            {...btnClick}
+            className="cursor-pointer"
+            onClick={() => dispatch(setCartOff())}
+          >
+            <BiChevronsRight className="text-[50px] text-white" />
+          </motion.i>
+          <p className="text-xl text-white font-semibold">My Cart</p>
+          <motion.i {...btnClick} className="cursor-pointer">
+            <FcClearFilters className="text-[30px] text-textColor" />
+          </motion.i>
+        </div>
         {cartItems && cartItems?.length > 0 ? (
           <>
-            <div className="flex flex-col w-full items-start justify-start gap-3 h-[70%] overflow-y-scroll scrollbar-none px-4">
+            <div className="flex flex-col w-full items-start justify-start gap-3 h-[70%] overflow-y-scroll scrollbar-none">
               {cartItems &&
                 cartItems?.length > 0 &&
                 cartItems?.map((item, i) => (
@@ -58,7 +72,7 @@ const Cart = () => {
                 ))}
             </div>
 
-            <div className="bg-zinc-800 rounded-t-[60px] w-full h-[30%] flex flex-col items-center justify-start px-4 py-6 gap-24">
+            <div className="bg-zinc-800 w-full h-[30%] flex flex-col items-center justify-center px-4 py-6 gap-4">
               <div className="w-full flex items-center justify-evenly">
                 <p className="text-3xl text-zinc-500 font-semibold">Total</p>
                 <p className="text-3xl text-orange-500 font-semibold flex items-center justify-center gap-1">
@@ -78,7 +92,10 @@ const Cart = () => {
           </>
         ) : (
           <>
-            <h1 className="text-3xl text-primary font-bold">Empty Cart</h1>
+            <h1 className="text-xl text-orange-500 mx-auto my-2 font-bold">Cart is Empty!</h1>
+            <div className="w-full h-full">
+              <img src={emptyCart} alt="" className="w-full h-full object-contain"/>
+            </div>
           </>
         )}
       </div>

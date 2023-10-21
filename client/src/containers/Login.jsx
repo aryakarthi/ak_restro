@@ -109,6 +109,10 @@ const Login = () => {
     }
   };
 
+  const gotoHome = () => {
+    navigate("/", { replace: true });
+  };
+
   return (
     <div className="w-screen h-screen relative overflow-hidden flex items-center">
       {/* background */}
@@ -121,9 +125,14 @@ const Login = () => {
       {/* login area */}
       <div className="flex flex-col items-center bg-lightOverlay w-full md:w-460 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6">
         {/* logo & brand */}
-        <div className="flex items-center justify-center gap-4 w-full">
+        <div
+          className="flex items-center justify-center gap-4 w-full hover:cursor-pointer"
+          onClick={gotoHome}
+        >
           <img src={logo} alt="" className="w-8" />
-          <h3 className="text-headingColor font-semibold text-2xl">ak ecom</h3>
+          <h3 className="text-headingColor font-semibold text-2xl">
+            ak Restro
+          </h3>
         </div>
         {/* welcome */}
         <p className="text-3xl font-semibold text-headingColor">

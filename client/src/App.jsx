@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Dashboard, Login, Main } from "./containers";
+import { Checkout, Dashboard, Login, Main } from "./containers";
 import { getAuth } from "firebase/auth";
 import { app } from "./config/firebase.config";
 import { useSelector, useDispatch } from "react-redux";
@@ -56,6 +56,7 @@ const App = () => {
         <Route path="/*" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
 
       {alert?.type && <Alert type={alert?.type} message={alert?.message} />}

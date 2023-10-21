@@ -3,25 +3,37 @@ import { motion } from "framer-motion";
 import { HiCurrencyRupee, IoBasket } from "../assets/icons";
 import { btnClick } from "../animations";
 import { useDispatch, useSelector } from "react-redux";
-import { alertNULL, alertSuccess } from "../app/slices/alertSlice";
+import {
+  alertNULL,
+  alertSuccess,
+  alertWarning,
+} from "../app/slices/alertSlice";
 import { addNewItemToCart, getAllCartItems } from "../api";
 import { setCartItems } from "../app/slices/cartSlice";
 
 const SliderCard = ({ data, index }) => {
   const user = useSelector((data) => data.user);
+  console.log(user);
   const dispatch = useDispatch();
 
   const sendToCart = () => {
-    dispatch(alertSuccess("Added to the cart"));
-    addNewItemToCart(user?.user_id, data).then((res) => {
-      getAllCartItems(user?.user_id).then((items) => {
-        console.log(items);
-        dispatch(setCartItems(items));
+    if (user) {
+      addNewItemToCart(user?.user_id, data).then((res) => {
+        getAllCartItems(user?.user_id).then((items) => {
+          console.log(items);
+          dispatch(setCartItems(items));
+          dispatch(alertSuccess("Added to the cart"));
+        });
+        setInterval(() => {
+          dispatch(alertNULL());
+        }, 3000);
       });
+    } else {
+      dispatch(alertWarning("Please login first!"));
       setInterval(() => {
         dispatch(alertNULL());
-      }, 3000);
-    });
+      }, 2000);
+    }
   };
 
   return (

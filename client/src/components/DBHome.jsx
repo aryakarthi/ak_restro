@@ -9,7 +9,7 @@ const DBHome = () => {
   const products = useSelector((data) => data.products);
   const clonedProducts = products?.map((prod) => ({ ...prod }));
   // console.log(clonedProducts);
-  const { allUsers } = useSelector((data) => data.allUsers);
+  const  allUsers  = useSelector((data) => data.allUsers);
 
   const dispatch = useDispatch();
 

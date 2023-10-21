@@ -9,9 +9,10 @@ import { SliderCard } from "../components";
 const FilterProducts = () => {
   const [category, setCategory] = useState("drinks");
   const products = useSelector((data) => data.products);
+  console.log(products);
 
   return (
-    <motion.div className="w-full flex flex-col bg-slate-300 p-2">
+    <motion.div className="w-full flex flex-col p-2">
       <div className=" w-full flex items-center justify-between ">
         <div className="flex flex-col items-start justify-start gap-1">
           <p className="text-2xl text-headingColor font-bold">Our Hot Dishes</p>
@@ -37,7 +38,6 @@ const FilterProducts = () => {
             .filter((data) => data.product_category === category)
             .map((data, i) => <SliderCard key={i} data={data} index={i} />)}
       </div>
-      
     </motion.div>
   );
 };
