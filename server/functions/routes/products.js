@@ -255,7 +255,7 @@ router.get("/allorders", async (req, res) => {
 });
 
 // update the order status
-router.post("/updateOrder/:order_id", async (req, res) => {
+router.post("/updateOrderStatus/:order_id", async (req, res) => {
   const order_id = req.params.order_id;
   const status = req.query.status;
 
@@ -264,6 +264,23 @@ router.post("/updateOrder/:order_id", async (req, res) => {
       .collection("orders")
       .doc(`/${order_id}/`)
       .update({ status });
+    return res.status(200).send({ success: true, data: updatedItem });
+  } catch (error) {
+    return res.send({ success: false, msg: `Error : ${error}` });
+  }
+});
+
+
+// update the order payment status
+router.post("/updatePayStatus/:order_id", async (req, res) => {
+  const order_id = req.params.order_id;
+  const paymentStatus = req.query.paymentStatus;
+
+  try {
+    const updatedItem = await db
+      .collection("orders")
+      .doc(`/${order_id}/`)
+      .update({ paymentStatus });
     return res.status(200).send({ success: true, data: updatedItem });
   } catch (error) {
     return res.send({ success: false, msg: `Error : ${error}` });

@@ -37,18 +37,18 @@ const SliderCard = ({ data, index }) => {
   };
 
   return (
-    <div className="bg-lightOverlay hover:drop-shadow-lg backdrop-blur-md rounded-xl flex flex-col items-center relative p-4 w-full md:max-w-[300px] md:min-w-[275px] gap-2">
+    <div className="bg-lightOverlay hover:drop-shadow-xl backdrop-blur-md rounded-xl flex flex-col items-center relative p-4 w-full md:max-w-[300px] md:min-w-[275px] gap-2 group">
       <motion.div
         {...btnClick}
         onClick={sendToCart}
-        className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center absolute top-4 right-4 cursor-pointer"
+        className="w-8 h-8 z-50 rounded-full bg-red-500 absolute top-2 cursor-pointer right-0 opacity-0 group-hover:right-2 group-hover:opacity-100 transition-all"
       >
-        <IoBasket className="text-2xl text-primary" />
+        <IoBasket className="text-2xl text-primary m-1" />
       </motion.div>
       <motion.img
-        whileHover={{ scale: 1.2 }}
+        // whileHover={{ scale: 1.2 }}
         src={data.imageURL}
-        className="w-36 h-36 object-contain"
+        className="w-full h-36 object-contain group-hover:scale-125 transition-all"
         alt=""
       />
       <div className="relative pt-4">

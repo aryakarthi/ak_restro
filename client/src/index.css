@@ -39,6 +39,11 @@ body {
   width: 100%;
 }
 
+.swiper-slide {
+  max-width: 300px;
+  min-width: 280px;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -21,9 +21,9 @@ const Slider = () => {
   }, [products]);
 
   return (
-    <div className="w-ful mx-auto">
+    <div className="w-full mx-auto">
       <Swiper
-        slidesPerView={3}
+        slidesPerView={4}
         centeredSlides={false}
         spaceBetween={20}
         grabCursor={true}
@@ -32,9 +32,9 @@ const Slider = () => {
         //   clickable: true,
         // }}
         // navigation={true}
-        // modules={[Pagination, Navigation]}
+        modules={[Pagination, Navigation]}
         breakpoints={{
-          480: {
+          300: {
             slidesPerView: 1,
             spaceBetween: 20,
           },

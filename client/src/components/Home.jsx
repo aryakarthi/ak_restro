@@ -9,7 +9,7 @@ const Home = () => {
     <>
       <motion.div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 p-2">
         <div className="flex flex-col items-start justify-start gap-6">
-          <div className="px-4 py-1 flex items-center justify-center gap-2 bg-blue-100 rounded-full">
+          <div className="pl-4 pr-1 py-1 flex items-center justify-center gap-2 bg-blue-100 rounded-full">
             <p className="text-lg font-semibold text-blue-500">Fast Delivery</p>
             <div className="w-10 h-10 flex items-center justify-center rounded-full bg-primary shadow-md">
               <img

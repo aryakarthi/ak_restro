@@ -3,14 +3,22 @@ import { motion } from "framer-motion";
 import { btnClick, staggerFadeInOut } from "../animations";
 import { useDispatch } from "react-redux";
 import { HiCurrencyRupee } from "../assets/icons";
-import { getAllOrders, updateOrderStatus } from "../api";
+import { getAllOrders, updateOrderStatus, updatePayStatus } from "../api";
 import { setOrders } from "../app/slices/orderSlice";
 
 const OrderData = ({ index, data, admin }) => {
   const dispatch = useDispatch();
 
-  const handleClick = (orderId, status) => {
+  const handleStatus = (orderId, status) => {
     updateOrderStatus(orderId, status).then((response) => {
+      getAllOrders().then((data) => {
+        dispatch(setOrders(data));
+      });
+    });
+  };
+
+  const handlePayStatus = (orderId, payStatus) => {
+    updatePayStatus(orderId, payStatus).then((response) => {
       getAllOrders().then((data) => {
         dispatch(setOrders(data));
       });
@@ -22,62 +30,122 @@ const OrderData = ({ index, data, admin }) => {
       {...staggerFadeInOut(index)}
       className="w-full flex flex-col items-start justify-start px-3 py-2 border relative border-gray-300 bg-lightOverlay drop-shadow-md rounded-md gap-4 mb-4"
     >
-      <div className="w-full flex items-center justify-between">
-        <h1 className="text-xl text-headingColor font-semibold">Orders</h1>
+      <div className="w-full flex items-start justify-between">
+        <div className="flex items-start justify-start flex-col gap-2 px-2 w-[50%]">
+          <h1 className="text-lg text-headingColor font-semibold">
+            {data.shippingDetails.customerName}
+          </h1>
 
-        <div className=" flex items-center gap-4">
-          <p className="flex items-center gap-1 text-textColor">
-            Total : <HiCurrencyRupee className="text-lg text-red-500" />{" "}
-            <span className="text-headingColor font-bold">
-              {data?.grandTotal}
-            </span>
+          <p className="text-base text-headingColor -mt-2">
+            {data.shippingDetails.email} {data.shippingDetails.mobile}
           </p>
 
-          <p className="px-2 py-[2px] text-sm text-headingColor font-semibold capitalize  rounded-md bg-emerald-400 drop-shadow-md">
-            {data?.paymentStatus}
+          <p className="text-base text-textColor -mt-2">
+            {data.shippingDetails.address.street},
+            {data.shippingDetails.address.city}{" "}
+            {data.shippingDetails.address.state} -
+            {data.shippingDetails.address.pincode}
           </p>
+        </div>
+        <div className="w-[50%] flex flex-col items-end">
+          <div className=" flex items-center gap-4 mb-4">
+            <p className="flex items-center gap-1 text-textColor">
+              Total : <HiCurrencyRupee className="text-lg text-red-500" />{" "}
+              <span className="text-headingColor font-bold">
+                {data?.grandTotal}
+              </span>
+            </p>
+            {!admin && (
+              <p className="text-lg font-semibold text-headingColor">
+                Payment Status :
+              </p>
+            )}
 
-          <p
-            className={`text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md ${
-              (data?.status === "preparing" &&
-                "text-orange-500 bg-orange-100") ||
-              (data?.status === "cancelled" && "text-red-500 bg-red-100") ||
-              (data?.status === "delivered" &&
-                "text-emerald-500 bg-emerald-100")
-            }`}
-          >
-            {data?.status}
-          </p>
+            <p
+              className={`text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md ${
+                (data?.paymentStatus === "pending" &&
+                  "text-orange-500 bg-orange-100") ||
+                (data?.paymentStatus === "paid" &&
+                  "text-emerald-500 bg-emerald-100")
+              }`}
+            >
+              {data?.paymentStatus}
+            </p>
 
-          {admin && (
-            <div className="flex items-center justify-center gap-2">
-              <p className="text-lg font-semibold text-headingColor">Mark As</p>
+            {admin && (
+              <div className="flex items-center justify-center gap-2">
+                <p className="text-lg font-semibold text-headingColor">
+                  Payment Status
+                </p>
 
-              <motion.p
-                {...btnClick}
-                onClick={() => handleClick(data.order_id, "preparing")}
-                className={`text-orange-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
-              >
-                Preparing
-              </motion.p>
+                <motion.button
+                  {...btnClick}
+                  onClick={() => handlePayStatus(data.order_id, "pending")}
+                  className={`text-orange-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
+                >
+                  Pending
+                </motion.button>
 
-              <motion.p
-                {...btnClick}
-                onClick={() => handleClick(data.order_id, "cancelled")}
-                className={`text-red-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
-              >
-                Cancelled
-              </motion.p>
+                <motion.button
+                  {...btnClick}
+                  onClick={() => handlePayStatus(data.order_id, "paid")}
+                  className={`text-emerald-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
+                >
+                  Paid
+                </motion.button>
+              </div>
+            )}
+          </div>
+          <div className=" flex items-center gap-4">
+            {!admin && (
+              <p className="text-lg font-semibold text-headingColor">
+                Order Status :
+              </p>
+            )}
+            <p
+              className={`text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md ${
+                (data?.status === "preparing" &&
+                  "text-orange-500 bg-orange-100") ||
+                (data?.status === "cancelled" && "text-red-500 bg-red-100") ||
+                (data?.status === "delivered" &&
+                  "text-emerald-500 bg-emerald-100")
+              }`}
+            >
+              {data?.status}
+            </p>
 
-              <motion.p
-                {...btnClick}
-                onClick={() => handleClick(data.order_id, "delivered")}
-                className={`text-emerald-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
-              >
-                Delivered
-              </motion.p>
-            </div>
-          )}
+            {admin && (
+              <div className="flex items-center justify-center gap-2">
+                <p className="text-lg font-semibold text-headingColor">
+                  Order Status
+                </p>
+
+                <motion.button
+                  {...btnClick}
+                  onClick={() => handleStatus(data.order_id, "preparing")}
+                  className={`text-orange-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
+                >
+                  Preparing
+                </motion.button>
+
+                <motion.button
+                  {...btnClick}
+                  onClick={() => handleStatus(data.order_id, "cancelled")}
+                  className={`text-red-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
+                >
+                  Cancelled
+                </motion.button>
+
+                <motion.button
+                  {...btnClick}
+                  onClick={() => handleStatus(data.order_id, "delivered")}
+                  className={`text-emerald-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
+                >
+                  Delivered
+                </motion.button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -113,23 +181,6 @@ const OrderData = ({ index, data, admin }) => {
                 </div>
               </motion.div>
             ))}
-        </div>
-
-        <div className="flex items-start justify-start flex-col gap-2 px-6 ml-auto w-full md:w-460">
-          <h1 className="text-lg text-headingColor font-semibold">
-            {data.shippingDetails.customerName}
-          </h1>
-
-          <p className="text-base text-headingColor -mt-2">
-            {data.shippingDetails.email} {data.shippingDetails.mobile}
-          </p>
-
-          <p className="text-base text-textColor -mt-2">
-            {data.shippingDetails.address.street},
-            {data.shippingDetails.address.city}{" "}
-            {data.shippingDetails.address.state} -
-            {data.shippingDetails.address.pincode}
-          </p>
         </div>
       </div>
     </motion.div>
