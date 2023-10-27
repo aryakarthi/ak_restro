@@ -19,9 +19,8 @@ export { default as Slider } from "./Slider";
 export { default as SliderCard } from "./SliderCard";
 export { default as FilterProducts } from "./FilterProducts";
 export { default as Cart } from "./Cart";
+export { default as CheckoutInput } from "./CheckoutInput";
 
-
-
-
-export { default as Text } from "./Text";
-
+export { default as OrderSuccess } from "./OrderSuccess";
+export { default as OrderData } from "./OrderData";
+export { default as UserOrders } from "./UserOrders";

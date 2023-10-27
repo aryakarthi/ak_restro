@@ -94,3 +94,38 @@ export const increaseItemQuantity = async (user_id, productId, type) => {
     return null;
   }
 };
+
+// create new order
+export const createOrder = async (data) => {
+  try {
+    const res = await axios.post(`${baseURL}/api/products/neworder`, {
+      ...data,
+    });
+    return res.data.data;
+  } catch (err) {
+    return null;
+  }
+};
+
+export const getAllOrders = async () => {
+  try {
+    const res = await axios.get(`${baseURL}/api/products/allorders`);
+    return res.data.data;
+  } catch (error) {
+    return null;
+  }
+};
+
+// update the order status
+export const updateOrderStatus = async (order_id, status) => {
+  try {
+    const res = await axios.post(
+      `${baseURL}/api/products/updateOrder/${order_id}`,
+      null,
+      { params: { status: status } }
+    );
+    return res.data.data;
+  } catch (error) {
+    return null;
+  }
+};

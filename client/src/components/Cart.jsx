@@ -12,12 +12,14 @@ import { getAllCartItems, increaseItemQuantity } from "../api";
 import { alertNULL, alertSuccess } from "../app/slices/alertSlice";
 import { setCartItems } from "../app/slices/cartSlice";
 import { emptyCart } from "../assets";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cartItems);
   console.log(cartItems);
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let tot = 0;
@@ -28,6 +30,11 @@ const Cart = () => {
       });
     }
   }, [cartItems]);
+
+  const handleCheckOut = () => {
+    dispatch(setCartOff());
+    navigate("/checkout");
+  };
 
   return (
     <motion.div
@@ -84,7 +91,7 @@ const Cart = () => {
               <motion.button
                 {...btnClick}
                 className="bg-emerald-400 w-[70%] px-4 py-3 text-xl text-white font-semibold hover:bg-emerald-500 drop-shadow-md rounded-2xl"
-                // onClick={handleCheckOut}
+                onClick={handleCheckOut}
               >
                 Check Out
               </motion.button>
@@ -92,9 +99,15 @@ const Cart = () => {
           </>
         ) : (
           <>
-            <h1 className="text-xl text-orange-500 mx-auto my-2 font-bold">Cart is Empty!</h1>
+            <h1 className="text-xl text-orange-500 mx-auto my-2 font-bold">
+              Cart is Empty!
+            </h1>
             <div className="w-full h-full">
-              <img src={emptyCart} alt="" className="w-full h-full object-contain"/>
+              <img
+                src={emptyCart}
+                alt=""
+                className="w-full h-full object-contain"
+              />
             </div>
           </>
         )}

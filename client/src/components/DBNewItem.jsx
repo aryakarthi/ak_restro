@@ -61,6 +61,46 @@ const DBNewItem = () => {
     );
   };
 
+  // const uploadImg = (e) => {
+  //   setIsLoading(true);
+  //   const imgFiles = e.target.files;
+  //   const promises = [];
+  //   for (let i = 0; i < imgFiles.length; i++) {
+  //     const imgFile = imgFiles[i];
+  //     const storageRef = ref(storage, `Images/${Date.now()}_${imgFile.name}`);
+  //     const uploadTask = uploadBytesResumable(storageRef, imgFile);
+  //     promises.push(uploadTask);
+  //     uploadTask.on(
+  //       "state_changed",
+  //       (snapshot) => {
+  //         setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+  //       },
+  //       (error) => {
+  //         dispatch(alertDanger(`Error : ${error}`));
+  //         setTimeout(() => {
+  //           dispatch(alertNULL());
+  //         }, 3000);
+  //       }
+  //     );
+  //   }
+
+  //   Promise.all(promises)
+  //     .then((snapshots) => {
+  //       return Promise.all(
+  //         snapshots.map((snapshot) => getDownloadURL(snapshot.ref))
+  //       );
+  //     })
+  //     .then((downloadURLs) => {
+  //       setImgDownloadURL(downloadURLs);
+  //       setIsLoading(false);
+  //       setProgress(null);
+  //       dispatch(alertSuccess("Uploaded"));
+  //       setTimeout(() => {
+  //         dispatch(alertNULL());
+  //       }, 3000);
+  //     });
+  // };
+
   const deleteImageFromFirebase = () => {
     setIsLoading(true);
     const deleteRef = ref(storage, imgDownloadURL);

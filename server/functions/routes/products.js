@@ -2,6 +2,7 @@ const router = require("express").Router();
 const admin = require("firebase-admin");
 const db = admin.firestore();
 db.settings({ ignoreUndefinedProperties: true });
+const { v4: uuidv4 } = require("uuid");
 
 router.post("/create", async (req, res) => {
   try {
@@ -182,5 +183,91 @@ router.post("/updateCart/:user_id", async (req, res) => {
   }
 });
 
+// create new order
+router.post("/neworder", async (req, res) => {
+  try {
+    const order_id = uuidv4();
+    const data = {
+      order_id: order_id,
+      created_at: req.body.created_at,
+      customer: req.body.customer,
+      items: req.body.items,
+      subTotal: req.body.subTotal,
+      shipCharge: req.body.shipCharge,
+      grandTotal: req.body.grandTotal,
+      paymentMode: req.body.paymentMode,
+      paymentStatus: req.body.paymentStatus,
+      shippingDetails: req.body.shippingDetails,
+      status: req.body.status,
+    };
+
+    const response = await db
+      .collection("orders")
+      .doc(`/${order_id}/`)
+      .set(data);
+
+    console.log(response);
+
+    deleteCart(req.body.customer.user_id, req.body.items);
+    console.log("*****************************************");
+
+    return res.status(200).send({ success: true, data: response });
+  } catch (err) {
+    return res.send({ success: false, msg: `Error :${err}` });
+  }
+});
+
+const deleteCart = async (userId, items) => {
+  console.log("Inside the delete");
+  console.log(userId);
+
+  console.log("*****************************************");
+  items.map(async (data) => {
+    console.log("----------inside--------", userId, data.productId);
+    await db
+      .collection("cartItems")
+      .doc(`/${userId}/`)
+      .collection("items")
+      .doc(`/${data.productId}/`)
+      .delete()
+      .then(() => console.log("---------successs--------"));
+  });
+};
+
+// getall the products
+router.get("/allorders", async (req, res) => {
+  (async () => {
+    try {
+      let query = db.collection("orders");
+      let response = [];
+      await query.get().then((querysnap) => {
+        let docs = querysnap.docs;
+        docs.map((doc) => {
+          response.push({ ...doc.data() });
+        });
+        return response;
+      });
+      return res.status(200).send({ success: true, data: response });
+    } catch (err) {
+      return res.send({ success: false, msg: `Error :${err}` });
+    }
+  })();
+});
+
+// update the order status
+router.post("/updateOrder/:order_id", async (req, res) => {
+  const order_id = req.params.order_id;
+  const status = req.query.status;
+
+  try {
+    const updatedItem = await db
+      .collection("orders")
+      .doc(`/${order_id}/`)
+      .update({ status });
+    return res.status(200).send({ success: true, data: updatedItem });
+  } catch (error) {
+    return res.send({ success: false, msg: `Error : ${error}` });
+  }
+});
 
 module.exports = router;

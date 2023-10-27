@@ -34,7 +34,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed backdrop-blur-md z-50 inset-x-0 top-0 flex items-center px-4 justify-between md:px-36 py-6">
+    <header className="fixed backdrop-blur-md z-50 inset-x-0 top-0 flex items-center px-4 justify-between md:px-40 py-6">
       <NavLink to={"/"} className="flex items-center justify-center gap-4">
         <img src={logo} alt="Logo" className="w-12" />
         <h3 className="font-semibold text-xl">ak Restro</h3>
@@ -112,12 +112,15 @@ const Header = () => {
                   onMouseLeave={() => setIsMenu(false)}
                   className="px-6 py-4 w-48 bg-zinc-200 backdrop-blur-md rounded-md shadow-md absolute top-14 right-0 flex flex-col gap-4"
                 >
-                  <Link
-                    to={"/dashboard/home"}
-                    className="hover:text-red-500 text-xl text-textColor"
-                  >
-                    Dashboard
-                  </Link>
+                  {user?.user_id === import.meta.env.VITE_APP_ADMIN_ID && (
+                    <Link
+                      to={"/dashboard/home"}
+                      className="hover:text-red-500 text-xl text-textColor"
+                    >
+                      Dashboard
+                    </Link>
+                  )}
+
                   <Link
                     to={"/profile"}
                     className="hover:text-red-500 text-xl text-textColor"

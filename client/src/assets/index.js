@@ -7,3 +7,5 @@ export { default as notFound } from "./img/NotFound.svg";
 export { default as loginBg } from "./img/loginBg.jpg";
 export { default as loginBg2 } from "./img/loginBg2.jpg";
 export { default as loginBg3 } from "./img/loginBg3.jpg";
+export { default as order_confirmed } from "./img/order_confirmed.jpg";
+export { default as payments } from "./img/payments.avif";

@@ -8,7 +8,7 @@ import { getAllCartItems, validateUserJWTToken } from "./api";
 import { setUserDetails } from "./app/slices/userSlice";
 import { motion } from "framer-motion";
 import { fadeInOut } from "./animations";
-import { Alert, MainLoader } from "./components";
+import { Alert, MainLoader, OrderSuccess, UserOrders } from "./components";
 import { setCartItems } from "./app/slices/cartSlice";
 
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
             // console.log(data);
             if (data) {
               getAllCartItems(data.user_id).then((items) => {
-                console.log(items);
+                // console.log(items);
                 dispatch(setCartItems(items));
               });
             }
@@ -57,6 +57,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/user-orders" element={<UserOrders />} />
       </Routes>
 
       {alert?.type && <Alert type={alert?.type} message={alert?.message} />}

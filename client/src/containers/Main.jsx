@@ -5,7 +5,6 @@ import {
   Header,
   Home,
   HomeSlider,
-  Text,
 } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../api";
@@ -18,6 +17,7 @@ const Main = () => {
   console.log(products);
   const showCart = useSelector((state) => state.showCart);
   const dispatch = useDispatch();
+  console.log(window.location.href);
 
   useEffect(() => {
     if (!products) {
