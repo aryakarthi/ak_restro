@@ -11,7 +11,6 @@ import { SliderCard } from "../components";
 
 const Slider = () => {
   const products = useSelector((data) => data.products);
-  console.log(products);
   // const clonedProducts = products?.map((prod) => ({ ...prod }));
 
   const [fruits, setFruits] = useState(null);

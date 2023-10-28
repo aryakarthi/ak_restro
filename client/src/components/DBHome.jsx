@@ -9,7 +9,7 @@ import { CChart } from "@coreui/react-chartjs";
 const DBHome = () => {
   const products = useSelector((data) => data.products);
   const clonedProducts = products?.map((prod) => ({ ...prod }));
-  // console.log(clonedProducts);
+
   const allUsers = useSelector((data) => data.allUsers);
 
   const orders = useSelector((data) => data.orders);

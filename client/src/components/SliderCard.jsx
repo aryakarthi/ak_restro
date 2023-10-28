@@ -13,14 +13,12 @@ import { setCartItems } from "../app/slices/cartSlice";
 
 const SliderCard = ({ data, index }) => {
   const user = useSelector((data) => data.user);
-  console.log(user);
   const dispatch = useDispatch();
 
   const sendToCart = () => {
     if (user) {
       addNewItemToCart(user?.user_id, data).then((res) => {
         getAllCartItems(user?.user_id).then((items) => {
-          console.log(items);
           dispatch(setCartItems(items));
           dispatch(alertSuccess("Added to the cart"));
         });

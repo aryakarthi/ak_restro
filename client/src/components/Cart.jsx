@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cartItems);
-  console.log(cartItems);
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,20 +40,6 @@ const Cart = () => {
       {...slideIn}
       className="fixed z-50 top-0 right-0 w-300 md:w-460 bg-lightOverlay backdrop-blur-md shadow-md h-full"
     >
-      {/* <div className="w-full flex items-center justify-between p-2 ">
-        <motion.i
-          {...btnClick}
-          className="cursor-pointer"
-          onClick={() => dispatch(setCartOff())}
-        >
-          <BiChevronsRight className="text-[50px] text-textColor" />
-        </motion.i>
-        <p className="text-xl text-headingColor font-semibold">My Cart</p>
-        <motion.i {...btnClick} className="cursor-pointer">
-          <FcClearFilters className="text-[30px] text-textColor" />
-        </motion.i>
-      </div> */}
-
       <div className="flex-1 flex flex-col items-start justify-start bg-zinc-700 h-full p-4 gap-3 relative">
         <div className="w-full flex items-center justify-between p-2 bg-lightOverlay ">
           <motion.i
@@ -124,7 +109,6 @@ export const CartItemCard = ({ index, data }) => {
 
   const decrementCart = (productId) => {
     dispatch(alertSuccess("Updated the cartitem"));
-
     increaseItemQuantity(user?.user_id, productId, "decrement").then((data) => {
       getAllCartItems(user?.user_id).then((items) => {
         dispatch(setCartItems(items));

@@ -9,7 +9,6 @@ import { SliderCard } from "../components";
 const FilterProducts = () => {
   const [category, setCategory] = useState("drinks");
   const products = useSelector((data) => data.products);
-  console.log(products);
 
   return (
     <motion.div className="w-full flex flex-col p-2">

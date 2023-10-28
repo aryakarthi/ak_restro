@@ -47,6 +47,7 @@ export const deleteAProduct = async (productId) => {
   }
 };
 
+// get all the users
 export const getAllUsers = async () => {
   try {
     const res = await axios.get(`${baseURL}/api/users/all`);
@@ -69,6 +70,7 @@ export const addNewItemToCart = async (user_id, data) => {
   }
 };
 
+// get all the cart items
 export const getAllCartItems = async (user_id) => {
   try {
     const res = await axios.get(
@@ -107,6 +109,7 @@ export const createOrder = async (data) => {
   }
 };
 
+// get all orders
 export const getAllOrders = async () => {
   try {
     const res = await axios.get(`${baseURL}/api/products/allorders`);

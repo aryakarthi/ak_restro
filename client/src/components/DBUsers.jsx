@@ -8,7 +8,6 @@ import { avatar } from "../assets";
 const DBUsers = () => {
   const allUsers = useSelector((data) => data.allUsers);
   const clonedUsers = allUsers?.map((user) => ({ ...user }));
-  // console.log(clonedUsers);
 
   const dispatch = useDispatch();
 

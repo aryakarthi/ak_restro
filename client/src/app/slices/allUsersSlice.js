@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 export const allUsersSlice = createSlice({
   name: "allUsers",
   initialState: null,
-  // {allUsers: null,},
   reducers: {
     setAllUsers(state, action) {
       return action.payload;

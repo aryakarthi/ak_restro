@@ -11,13 +11,9 @@ import { getAllProducts } from "../api";
 import { setAllProducts } from "../app/slices/productSlice";
 
 const Main = () => {
-  // const states = useSelector((state) => state);
-  // console.log(states);
   const products = useSelector((state) => state.products);
-  console.log(products);
   const showCart = useSelector((state) => state.showCart);
   const dispatch = useDispatch();
-  console.log(window.location.href);
 
   useEffect(() => {
     if (!products) {

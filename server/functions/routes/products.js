@@ -17,7 +17,6 @@ router.post("/create", async (req, res) => {
     };
 
     const response = await db.collection("products").doc(`/${id}/`).set(data);
-    console.log(response);
     return res.status(200).send({ success: true, data: response });
   } catch (err) {
     return res.send({ success: false, msg: `Error :${err}` });
@@ -206,10 +205,9 @@ router.post("/neworder", async (req, res) => {
       .doc(`/${order_id}/`)
       .set(data);
 
-    console.log(response);
+    // console.log(response);
 
     deleteCart(req.body.customer.user_id, req.body.items);
-    console.log("*****************************************");
 
     return res.status(200).send({ success: true, data: response });
   } catch (err) {
@@ -218,19 +216,13 @@ router.post("/neworder", async (req, res) => {
 });
 
 const deleteCart = async (userId, items) => {
-  console.log("Inside the delete");
-  console.log(userId);
-
-  console.log("*****************************************");
   items.map(async (data) => {
-    console.log("----------inside--------", userId, data.productId);
     await db
       .collection("cartItems")
       .doc(`/${userId}/`)
       .collection("items")
       .doc(`/${data.productId}/`)
-      .delete()
-      .then(() => console.log("---------successs--------"));
+      .delete();
   });
 };
 
@@ -269,7 +261,6 @@ router.post("/updateOrderStatus/:order_id", async (req, res) => {
     return res.send({ success: false, msg: `Error : ${error}` });
   }
 });
-
 
 // update the order payment status
 router.post("/updatePayStatus/:order_id", async (req, res) => {

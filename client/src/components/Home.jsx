@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { delivery, heroBg } from "../assets";
+import { delivery } from "../assets";
 import { btnClick, staggerFadeInOut } from "../animations";
 import { randomData } from "../utils/styles";
 
@@ -40,15 +40,9 @@ const Home = () => {
         </div>
 
         <div className="py-2 flex-1 flex items-end justify-center relative">
-          {/* <img
-          className="absolute top-0 right-0 md:right-0 w-auto h-420 md:h-650"
-          src={heroBg}
-          alt=""
-        /> */}
-
           <div className="w-full md:w-460 flex flex-wrap items-center justify-center gap-5 gap-y-16">
             {randomData &&
-              randomData.map((data, i) => (
+              randomData.map((data) => (
                 <motion.div
                   key={data.id}
                   {...staggerFadeInOut(data.id)}
@@ -59,18 +53,10 @@ const Home = () => {
                     className="w-12 h-12 md:w-32 md:h-32 md:-mt-16 object-contain "
                     alt=""
                   />
-                  {/* <p className="text-sm lg:text-xl font-semibold text-textColor">
-                  {data.product_name.slice(0, 14)}
-                </p> */}
 
                   <p className="text-[12px] text-center  md:text-base text-lighttextGray font-semibold  capitalize mt-4">
                     {data.product_category}
                   </p>
-
-                  {/* <p className="text-sm  font-semibold text-headingColor">
-                  <span className="text-xs text-red-600">$</span>{" "}
-                  {data.product_price}
-                </p> */}
                 </motion.div>
               ))}
           </div>

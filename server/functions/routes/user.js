@@ -28,38 +28,6 @@ router.get("/jwtVerification", async (req, res) => {
   }
 });
 
-// const listAllUsers = async (nextPageToken) => {
-//   admin
-//     .auth()
-//     .listUsers(1000, nextPageToken)
-//     .then((listUserResult) => {
-//       listUserResult.users.forEach((userRecord) => {
-//         data.push(userRecord.toJSON());
-//       });
-//       if (listUserResult.pageToken) {
-//         listAllUsers(listUserResult.pageToken);
-//       }
-//     })
-//     .catch((err) => console.log(err));
-// };
-
-// listAllUsers();
-
-// router.get("/all", async (req, res) => {
-//   listAllUsers();
-//   try {
-//     return res
-//       .status(200)
-//       .send({ success: true, data: data, dataCount: data.length });
-//   } catch (err) {
-//     return res.send({
-//       success: false,
-//       msg: `Error in listing users : ${err}`,
-//     });
-//   }
-// });
-
-// revised
 const listAllUsers = async (nextPageToken) => {
   const data = []; // Declare the data array within the function scope
 

@@ -31,7 +31,6 @@ const DBNewItem = () => {
   const uploadImg = (e) => {
     setIsLoading(true);
     const imgFile = e.target.files[0];
-    // console.log(imgFile);
     const storageRef = ref(storage, `Images/${Date.now()}_${imgFile.name}`);
 
     const uploadTask = uploadBytesResumable(storageRef, imgFile);
@@ -48,7 +47,6 @@ const DBNewItem = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          // console.log("File available at", downloadURL);
           setImgDownloadURL(downloadURL);
           setIsLoading(false);
           setProgress(null);
@@ -60,46 +58,6 @@ const DBNewItem = () => {
       }
     );
   };
-
-  // const uploadImg = (e) => {
-  //   setIsLoading(true);
-  //   const imgFiles = e.target.files;
-  //   const promises = [];
-  //   for (let i = 0; i < imgFiles.length; i++) {
-  //     const imgFile = imgFiles[i];
-  //     const storageRef = ref(storage, `Images/${Date.now()}_${imgFile.name}`);
-  //     const uploadTask = uploadBytesResumable(storageRef, imgFile);
-  //     promises.push(uploadTask);
-  //     uploadTask.on(
-  //       "state_changed",
-  //       (snapshot) => {
-  //         setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-  //       },
-  //       (error) => {
-  //         dispatch(alertDanger(`Error : ${error}`));
-  //         setTimeout(() => {
-  //           dispatch(alertNULL());
-  //         }, 3000);
-  //       }
-  //     );
-  //   }
-
-  //   Promise.all(promises)
-  //     .then((snapshots) => {
-  //       return Promise.all(
-  //         snapshots.map((snapshot) => getDownloadURL(snapshot.ref))
-  //       );
-  //     })
-  //     .then((downloadURLs) => {
-  //       setImgDownloadURL(downloadURLs);
-  //       setIsLoading(false);
-  //       setProgress(null);
-  //       dispatch(alertSuccess("Uploaded"));
-  //       setTimeout(() => {
-  //         dispatch(alertNULL());
-  //       }, 3000);
-  //     });
-  // };
 
   const deleteImageFromFirebase = () => {
     setIsLoading(true);
@@ -123,9 +81,7 @@ const DBNewItem = () => {
       product_description: description,
       imageURL: imgDownloadURL,
     };
-    // console.log(data);
     addNewProduct(data).then((res) => {
-      console.log(res);
       dispatch(alertSuccess("New Item Added!"));
       setTimeout(() => {
         dispatch(alertNULL());
@@ -144,14 +100,12 @@ const DBNewItem = () => {
   return (
     <div className="flex items-center justify-center flex-col pt-6 px-24 w-full">
       <div className="border border-gray-300 rounded-md p-4 w-full flex flex-col items-center justify-center gap-4">
-        {/* itemname */}
         <InputField
           type="text"
           placeHolder={"Item Name"}
           stateValue={itemName}
           stateFunction={setItemName}
         />
-        {/* category */}
         <div className="w-full flex items-center justify-around gap-3 flex-wrap">
           {statuses &&
             statuses?.map((data) => (
@@ -168,21 +122,18 @@ const DBNewItem = () => {
               </p>
             ))}
         </div>
-        {/* price */}
         <InputField
           type="number"
           placeHolder={"Price"}
           stateValue={price}
           stateFunction={setPrice}
         />
-        {/* description */}
         <InputField
           type="text"
           placeHolder={"Description"}
           stateValue={description}
           stateFunction={setDescription}
         />
-        {/* upload image */}
         <div className="w-full bg-card backdrop-blur-md h-370 rounded-md border-2 border-dotted border-gray-300 cursor-pointer">
           {isLoading ? (
             <div className="w-full h-full flex flex-col items-center justify-evenly px-24">
@@ -256,7 +207,6 @@ const DBNewItem = () => {
             </>
           )}
         </div>
-        {/* submit  */}
         <motion.button
           onClick={submitNewData}
           {...btnClick}

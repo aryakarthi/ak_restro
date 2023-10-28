@@ -9,8 +9,7 @@ import {
   SlLocationPin,
   BsPostcard,
 } from "../assets/icons";
-import { avatar, payments } from "../assets";
-import { motion } from "framer-motion";
+
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { setOrders } from "../app/slices/orderSlice";
@@ -22,7 +21,6 @@ const Checkout = () => {
   const user = useSelector((data) => data.user);
   const cartItems = useSelector((state) => state.cartItems);
   const dispatch = useDispatch();
-  // const { v4: order_id } = require("uuid");
   const [subtotal, setSubTotal] = useState(0);
   const [shipCharge, setShipCharge] = useState(100);
   const gotoSuccess = useNavigate();
@@ -49,7 +47,6 @@ const Checkout = () => {
   const paymodeChange = (e) => {
     setPaymode(e.target.value);
   };
-  // console.log(paymode);
 
   const handleCheckout = (e) => {
     e.preventDefault();
@@ -61,7 +58,6 @@ const Checkout = () => {
       address: { street, city, state, pincode },
     };
     const checkoutData = {
-      // order_id,
       created_at: Date.now(),
       customer: user,
       items: cartItems,
@@ -75,7 +71,6 @@ const Checkout = () => {
     };
 
     createOrder(checkoutData).then((res) => {
-      console.log(res);
       dispatch(alertSuccess("Order Placed Successfully!"));
       gotoSuccess("/order-success", { replace: true });
       setTimeout(() => {
@@ -83,11 +78,8 @@ const Checkout = () => {
       }, 3000);
     });
     getAllOrders().then((data) => {
-      console.log(data);
       dispatch(setOrders(data));
     });
-
-    console.log(checkoutData);
   };
 
   return (
@@ -149,27 +141,9 @@ const Checkout = () => {
               </p>
             </div>
           </div>
-
-          {/* <p className="mt-8 text-lg font-medium">Payment Methods</p>
-          <div className="mt-4 space-y-3 rounded-lg border bg-gray-200 px-2 py-4 sm:px-6 ">
-            <div className="flex flex-col rounded-lg bg-gray-200 sm:flex-row">
-              <img
-                className="w-24 rounded-md border object-cover"
-                src={payments}
-                alt=""
-              />
-              <div className="flex w-full flex-col px-4 py-4 ">
-                <p className="mt-2 font-semibold">UPI Payments</p>
-                <p className="text-slate-500 text-sm leading-6">
-                  GPay / Phonepe / Paytm
-                </p>
-              </div>
-            </div>
-          </div> */}
         </div>
         <div className="w-full md:mt-10 mt-2 px-4 pt-8 lg:mt-0">
           <p className="text-xl font-medium">Shipping Details</p>
-          {/* <div className="min-h-screen p-4 bg-gray-200 leading-loose"> */}
           <div className="w-full mt-8">
             <form className="w-full" onSubmit={handleCheckout}>
               <div className=" rounded-md flex flex-col items-center justify-center gap-6 px-4 md:px-12 py-12 bg-gray-200">
@@ -258,12 +232,6 @@ const Checkout = () => {
               </div>
             </form>
           </div>
-          {/* </div> */}
-
-          <link
-            href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-            rel="stylesheet"
-          ></link>
         </div>
       </div>
     </div>

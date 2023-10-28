@@ -14,8 +14,8 @@ import { setCartOn } from "../app/slices/showCartSlice";
 const Header = () => {
   const user = useSelector((data) => data.user);
   const cartItems = useSelector((data) => data.cartItems);
-  const [isMenu, setIsMenu] = useState(false);
   const dispatch = useDispatch();
+  const [isMenu, setIsMenu] = useState(false);
   const firebaseAuth = getAuth(app);
   const navigate = useNavigate();
 
@@ -29,7 +29,6 @@ const Header = () => {
   };
 
   const handleLogin = () => {
-    console.log("clicked");
     navigate("/login", { replace: true });
   };
 
@@ -50,22 +49,7 @@ const Header = () => {
           >
             Home
           </NavLink>
-          {/* <NavLink
-            className={({ isActive }) =>
-              isActive ? isActiveStyles : isNotActiveStyles
-            }
-            to={"/menu"}
-          >
-            Menu
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              isActive ? isActiveStyles : isNotActiveStyles
-            }
-            to={"/about"}
-          >
-            About
-          </NavLink> */}
+
           <NavLink
             className={({ isActive }) =>
               isActive ? isActiveStyles : isNotActiveStyles
@@ -150,15 +134,13 @@ const Header = () => {
           </>
         ) : (
           <>
-            <NavLink to={"/login"}>
-              <motion.button
-                {...btnClick}
-                // onClick={handleLogin}
-                className="px-4 py-2 rounded-md shadow-md bg-lightOverlay border border-emerald-300 cursor-pointer"
-              >
-                Login
-              </motion.button>
-            </NavLink>
+            <motion.button
+              {...btnClick}
+              onClick={handleLogin}
+              className="px-4 py-2 rounded-md shadow-md bg-lightOverlay border border-emerald-300 cursor-pointer"
+            >
+              Login
+            </motion.button>
           </>
         )}
       </nav>

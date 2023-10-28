@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { loginBg3, loginBg2, loginBg, logo } from "../assets";
+import { loginBg2, logo } from "../assets";
 import { LoginInput } from "../components";
 import { FaEnvelope, FaLock, FcGoogle } from "../assets/icons";
 import { motion } from "framer-motion";
@@ -13,6 +13,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+
 import { app } from "../config/firebase.config";
 import { validateUserJWTToken } from "../api";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +32,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const user = useSelector((data) => data.user);
   const alert = useSelector((data) => data.alert);
-  // console.log(user);
 
   useEffect(() => {
     if (user) {
@@ -44,9 +44,7 @@ const Login = () => {
       firebaseAuth.onAuthStateChanged((cred) => {
         if (cred) {
           cred.getIdToken().then((token) => {
-            // console.log(token);
             validateUserJWTToken(token).then((data) => {
-              // console.log(data);
               dispatch(setUserDetails(data));
             });
             navigate("/", { replace: true });
@@ -73,7 +71,6 @@ const Login = () => {
             if (cred) {
               cred.getIdToken().then((token) => {
                 validateUserJWTToken(token).then((data) => {
-                  // console.log(data);
                   dispatch(setUserDetails(data));
                 });
                 navigate("/", { replace: true });
@@ -95,7 +92,6 @@ const Login = () => {
             if (cred) {
               cred.getIdToken().then((token) => {
                 validateUserJWTToken(token).then((data) => {
-                  // console.log(data);
                   dispatch(setUserDetails(data));
                 });
                 navigate("/", { replace: true });
@@ -115,16 +111,13 @@ const Login = () => {
 
   return (
     <div className="w-screen h-screen relative overflow-hidden flex items-center">
-      {/* background */}
       <img
         src={loginBg2}
         alt=""
         className="w-full h-full absolute object-cover top-0 left-0"
       />
 
-      {/* login area */}
       <div className="flex flex-col items-center bg-lightOverlay w-full md:w-460 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6">
-        {/* logo & brand */}
         <div
           className="flex items-center justify-center gap-4 w-full hover:cursor-pointer"
           onClick={gotoHome}
@@ -134,7 +127,6 @@ const Login = () => {
             ak Restro
           </h3>
         </div>
-        {/* welcome */}
         <p className="text-3xl font-semibold text-headingColor">
           Welcome Back!
         </p>

@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 export const alertSlice = createSlice({
   name: "alert",
   initialState: null,
-  // { alert: null,},
   reducers: {
     alertSuccess(state, action) {
       return { type: "success", message: action.payload };

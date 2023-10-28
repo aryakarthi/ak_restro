@@ -17,7 +17,6 @@ const App = () => {
 
   const dispatch = useDispatch();
   const alert = useSelector((data) => data.alert);
-  // console.log(alert);
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,10 +24,8 @@ const App = () => {
       if (cred) {
         cred.getIdToken().then((token) => {
           validateUserJWTToken(token).then((data) => {
-            // console.log(data);
             if (data) {
               getAllCartItems(data.user_id).then((items) => {
-                // console.log(items);
                 dispatch(setCartItems(items));
               });
             }

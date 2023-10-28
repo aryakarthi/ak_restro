@@ -10,7 +10,6 @@ import { clearCartItems } from "../app/slices/cartSlice";
 
 const OrderSuccess = () => {
   const cartItems = useSelector((state) => state.cartItems);
-  console.log(cartItems);
   const dispatch = useDispatch();
 
   useEffect(() => {

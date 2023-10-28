@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 export const showCartSlice = createSlice({
   name: "showCart",
   initialState: false,
-  // {showCart: false,},
   reducers: {
     setCartOn: (state) => {
       return true;
