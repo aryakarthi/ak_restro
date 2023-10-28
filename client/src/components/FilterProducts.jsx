@@ -27,6 +27,7 @@ const FilterProducts = () => {
               category={category}
               setCategory={setCategory}
               index={i}
+              key={data.id}
             />
           ))}
       </div>
@@ -44,7 +45,7 @@ const FilterProducts = () => {
 export const FilterCard = ({ data, index, category, setCategory }) => {
   return (
     <motion.div
-      key={index}
+      key={data.id}
       {...staggerFadeInOut(index)}
       onClick={() => setCategory(data.category)}
       className={`group w-24 min-w-[100px] cursor-pointer rounded-md py-4 ${
